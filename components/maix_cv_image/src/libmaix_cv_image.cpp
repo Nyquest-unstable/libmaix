@@ -363,14 +363,14 @@ extern "C"
         int baseline = 0;
         cv::Size textSize = cv::getTextSize(text, cv::FONT_HERSHEY_PLAIN, scale, thickness, &baseline);
         int tmp = baseline - (scale * thickness);
-        *width = textSize.width, *height = textSize.height + tmp;
+        *width = textSize.width * scale, *height = textSize.height + tmp;
         // printf("old textSize w %d h %d b %d\r\n", textSize.width, textSize.height, baseline);
       }
       else
       {
         int fontHeight = 14, baseline = 0; // tested sans.ttf
         cv::Size textSize = libmaix_font::ft->getTextSize(text, fontHeight, thickness, &baseline);
-        *width = textSize.width, *height = fontHeight * scale;
+        *width = textSize.width * scale, *height = fontHeight * scale;
         // printf("new textSize w %d h %d b %d\r\n", textSize.width, textSize.height, baseline);
       }
   }
