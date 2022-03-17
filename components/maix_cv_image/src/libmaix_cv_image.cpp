@@ -342,20 +342,23 @@ extern "C"
     return LIBMAIX_ERR_NOT_IMPLEMENT;
   }
 
-  libmaix_err_t libmaix_cv_image_load_freetype(const char *path)
+  libmaix_err_t libmaix_cv_image_load_freetype(const char *path, int fontHeight)
   {
     if (libmaix_font::is_load)
       libmaix_font::ft = cv::freetype::createFreeType2(); // re-load clear it
     libmaix_font::ft->loadFontData(cv::String(path), 0);
     libmaix_font::is_load = true;
+    libmaix_font::fontHeight = fontHeight;
     return LIBMAIX_ERR_NONE;
   }
 
-  // libmaix_err_t libmaix_cv_image_font_free()
-  // {
-  //     delete libmaix_font::ft;
-  //     return LIBMAIX_ERR_NONE;
-  // }
+  libmaix_err_t libmaix_cv_image_free_freetype()
+  {
+      if (libmaix_font::is_load)
+        delete libmaix_font::ft;
+        libmaix_font::is_load = false;
+      return LIBMAIX_ERR_NONE;
+  }
 
   void libmaix_cv_image_get_string_size(int *width, int *height, const char *str, double scale, int thickness)
   {
